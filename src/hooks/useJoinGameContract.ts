@@ -55,6 +55,52 @@ export function useJoinGameContract() {
 
     return gameContract.getTestMapFn(BigInt(one));
   };
+  const setStructure = async (one: number) => {
+    if (!gameContract) return;
+    console.log("Calling contract", one);
+
+    return gameContract.send(
+      sender,
+      { value: toNano("0.01"), bounce: false },
+      {
+        $$type: "SetStructureToMap",
+        set1:{
+          $$type:"TestStructure",
+          data1:BigInt(1235),
+          data2:BigInt(5677)
+        }
+        // gameCount: BigInt(1),
+        // gameListData: data,
+      }
+    );
+  };
+  const getStructure = async (one: number) => {
+    if (!gameContract) return;
+    console.log("Calling contract", one);
+
+    return gameContract.getTestStructureFn(BigInt(1235));
+  };
+  const setTesting = async (one: number) => {
+    if (!gameContract) return;
+    console.log("Calling contract", one);
+
+    return gameContract.send(
+      sender,
+      { value: toNano("0.01"), bounce: false },
+      {
+        $$type: "SetTestToMap",
+        data:BigInt(9001),
+        // gameCount: BigInt(1),
+        // gameListData: data,
+      }
+    );
+  };
+  const getTesing = async (one: number) => {
+    if (!gameContract) return;
+    console.log("Calling contract", one);
+
+    return gameContract.getTestingMap(BigInt(1235));
+  };
   const createGame = async (gameId: number) => {
     if (!gameContract) return;
     console.log("Calling contract");
@@ -97,5 +143,9 @@ export function useJoinGameContract() {
     address: gameContract?.address.toString(),
     setMap,
     getMap,
+    setStructure,
+    getStructure,
+    setTesting,
+    getTesing
   };
 }
