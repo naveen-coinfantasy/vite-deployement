@@ -64,11 +64,11 @@ export function useJoinGameContract() {
       { value: toNano("0.01"), bounce: false },
       {
         $$type: "SetStructureToMap",
-        set1:{
-          $$type:"TestStructure",
-          data1:BigInt(1235),
-          data2:BigInt(5677)
-        }
+        set1: {
+          $$type: "TestStructure",
+          data1: BigInt(1235),
+          data2: BigInt(5677),
+        },
         // gameCount: BigInt(1),
         // gameListData: data,
       }
@@ -89,8 +89,8 @@ export function useJoinGameContract() {
       { value: toNano("0.01"), bounce: false },
       {
         $$type: "SetTestToMap",
-        key:BigInt(9001),
-        value: BigInt(250)
+        key: BigInt(9001),
+        value: BigInt(250),
         // gameCount: BigInt(1),
         // gameListData: data,
       }
@@ -104,37 +104,53 @@ export function useJoinGameContract() {
   };
   const createGame = async (gameId: number) => {
     if (!gameContract) return;
-    console.log("Calling contract");
-    const data: Dictionary<number, CreateGameRequest> = Dictionary.empty();
-    data.set(0, {
-      $$type: "CreateGameRequest",
-      entryFee: BigInt(gameId),
-      gameDurationSeconds: BigInt(10),
-      gameId: BigInt(1),
-      totalRewardPool: BigInt(10),
-      totalSpots: BigInt(10),
-    });
-    console.log(data);
+    console.log("Creating Game", gameId);
     return gameContract.send(
       sender,
       { value: toNano("0.01"), bounce: false },
       {
-        $$type: "CreateGameList",
+        $$type: "CreateGameRequestMessage",
         entryFee: BigInt(gameId),
         gameDurationSeconds: BigInt(10),
-        gameId: BigInt(1),
+        gameId: BigInt(gameId),
         totalRewardPool: BigInt(10),
         totalSpots: BigInt(10),
-        // gameCount: BigInt(1),
-        // gameListData: data,
       }
     );
   };
+  // const createGame = async (gameId: number) => {
+  //   if (!gameContract) return;
+  //   console.log("Calling contract");
+  //   const data: Dictionary<number, CreateGameRequest> = Dictionary.empty();
+  //   data.set(0, {
+  //     $$type: "CreateGameRequest",
+  //     entryFee: BigInt(gameId),
+  //     gameDurationSeconds: BigInt(10),
+  //     gameId: BigInt(1),
+  //     totalRewardPool: BigInt(10),
+  //     totalSpots: BigInt(10),
+  //   });
+  //   console.log(data);
+  //   return gameContract.send(
+  //     sender,
+  //     { value: toNano("0.01"), bounce: false },
+  //     {
+  //       $$type: "CreateGameList",
+  //       entryFee: BigInt(gameId),
+  //       gameDurationSeconds: BigInt(10),
+  //       gameId: BigInt(1),
+  //       totalRewardPool: BigInt(10),
+  //       totalSpots: BigInt(10),
+  //       // gameCount: BigInt(1),
+  //       // gameListData: data,
+  //     }
+  //   );
+  // };
   const getGame = async (gameId: number) => {
     if (!gameContract) return;
     console.log("Calling GetGame", gameId);
 
-    return gameContract.getGameStatus(BigInt(gameId));
+    return gameContract.getGame(BigInt(gameId));
   };
 
   return {
@@ -147,6 +163,6 @@ export function useJoinGameContract() {
     setStructure,
     getStructure,
     setTesting,
-    getTesing
+    getTesing,
   };
 }
