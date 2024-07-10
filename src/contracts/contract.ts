@@ -675,6 +675,7 @@ export type Test = {
   $$type: 'Test';
   address: Address;
   time: bigint;
+  recievedData: bigint;
 }
 
 export function storeTest(src: Test) {
@@ -682,6 +683,7 @@ export function storeTest(src: Test) {
       let b_0 = builder;
       b_0.storeAddress(src.address);
       b_0.storeUint(src.time, 256);
+      b_0.storeUint(src.recievedData, 256);
   };
 }
 
@@ -689,19 +691,22 @@ export function loadTest(slice: Slice) {
   let sc_0 = slice;
   let _address = sc_0.loadAddress();
   let _time = sc_0.loadUintBig(256);
-  return { $$type: 'Test' as const, address: _address, time: _time };
+  let _recievedData = sc_0.loadUintBig(256);
+  return { $$type: 'Test' as const, address: _address, time: _time, recievedData: _recievedData };
 }
 
 function loadTupleTest(source: TupleReader) {
   let _address = source.readAddress();
   let _time = source.readBigNumber();
-  return { $$type: 'Test' as const, address: _address, time: _time };
+  let _recievedData = source.readBigNumber();
+  return { $$type: 'Test' as const, address: _address, time: _time, recievedData: _recievedData };
 }
 
 function storeTupleTest(source: Test) {
   let builder = new TupleBuilder();
   builder.writeAddress(source.address);
   builder.writeNumber(source.time);
+  builder.writeNumber(source.recievedData);
   return builder.build();
 }
 
@@ -869,32 +874,37 @@ function dictValueParserSetStructureToMap(): DictionaryValue<SetStructureToMap> 
 
 export type SetTestToMap = {
   $$type: 'SetTestToMap';
-  data: bigint;
+  key: bigint;
+  value: bigint;
 }
 
 export function storeSetTestToMap(src: SetTestToMap) {
   return (builder: Builder) => {
       let b_0 = builder;
-      b_0.storeUint(3545966140, 32);
-      b_0.storeUint(src.data, 256);
+      b_0.storeUint(1300029301, 32);
+      b_0.storeUint(src.key, 256);
+      b_0.storeUint(src.value, 256);
   };
 }
 
 export function loadSetTestToMap(slice: Slice) {
   let sc_0 = slice;
-  if (sc_0.loadUint(32) !== 3545966140) { throw Error('Invalid prefix'); }
-  let _data = sc_0.loadUintBig(256);
-  return { $$type: 'SetTestToMap' as const, data: _data };
+  if (sc_0.loadUint(32) !== 1300029301) { throw Error('Invalid prefix'); }
+  let _key = sc_0.loadUintBig(256);
+  let _value = sc_0.loadUintBig(256);
+  return { $$type: 'SetTestToMap' as const, key: _key, value: _value };
 }
 
 function loadTupleSetTestToMap(source: TupleReader) {
-  let _data = source.readBigNumber();
-  return { $$type: 'SetTestToMap' as const, data: _data };
+  let _key = source.readBigNumber();
+  let _value = source.readBigNumber();
+  return { $$type: 'SetTestToMap' as const, key: _key, value: _value };
 }
 
 function storeTupleSetTestToMap(source: SetTestToMap) {
   let builder = new TupleBuilder();
-  builder.writeNumber(source.data);
+  builder.writeNumber(source.key);
+  builder.writeNumber(source.value);
   return builder.build();
 }
 
@@ -962,8 +972,8 @@ function initCreateGameContact_init_args(src: CreateGameContact_init_args) {
 }
 
 async function CreateGameContact_init() {
-  const __code = Cell.fromBase64('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');
-  const __system = Cell.fromBase64('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');
+  const __code = Cell.fromBase64('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');
+  const __system = Cell.fromBase64('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');
   let builder = beginCell();
   builder.storeRef(__system);
   builder.storeUint(0, 1);
@@ -1012,11 +1022,11 @@ const CreateGameContact_types: ABIType[] = [
   {"name":"CreateGameRequest","header":null,"fields":[{"name":"gameId","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"totalSpots","type":{"kind":"simple","type":"uint","optional":false,"format":32}},{"name":"totalRewardPool","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"entryFee","type":{"kind":"simple","type":"uint","optional":false,"format":32}},{"name":"gameDurationSeconds","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
   {"name":"TestStructure","header":null,"fields":[{"name":"data1","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"data2","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
   {"name":"CreateStruct","header":null,"fields":[{"name":"value1","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"value2","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"value3","type":{"kind":"simple","type":"address","optional":false}},{"name":"time","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
-  {"name":"Test","header":null,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}},{"name":"time","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
+  {"name":"Test","header":null,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}},{"name":"time","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"recievedData","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
   {"name":"CreateGameList","header":3225005017,"fields":[{"name":"gameId","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"totalSpots","type":{"kind":"simple","type":"uint","optional":false,"format":32}},{"name":"totalRewardPool","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"entryFee","type":{"kind":"simple","type":"uint","optional":false,"format":32}},{"name":"gameDurationSeconds","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
   {"name":"SetTestData","header":1686839036,"fields":[{"name":"value1","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"value2","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
   {"name":"SetStructureToMap","header":800691476,"fields":[{"name":"set1","type":{"kind":"simple","type":"TestStructure","optional":false}}]},
-  {"name":"SetTestToMap","header":3545966140,"fields":[{"name":"data","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
+  {"name":"SetTestToMap","header":1300029301,"fields":[{"name":"key","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"value","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
   {"name":"SetMap","header":2570311250,"fields":[{"name":"gameId","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
 ]
 

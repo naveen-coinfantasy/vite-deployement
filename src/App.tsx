@@ -16,8 +16,8 @@ function App() {
       <button onClick={async () => { const a = await getTesing(1000);
         console.log(a)
         console.log(a?.size);
-        console.log(a?.get(BigInt(9000)));
         console.log(a?.get(BigInt(9001)));
+        // console.log(a?.get(BigInt(9001)));
        }}>get Testing</button>
       {/* <button onClick={() => setStructure(1000)}>set Struct</button>
       <button onClick={async () => console.log(await getStructure(1000))}>get Struct</button> */}

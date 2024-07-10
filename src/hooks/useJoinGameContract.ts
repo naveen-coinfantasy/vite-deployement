@@ -89,7 +89,8 @@ export function useJoinGameContract() {
       { value: toNano("0.01"), bounce: false },
       {
         $$type: "SetTestToMap",
-        data:BigInt(9001),
+        key:BigInt(9001),
+        value: BigInt(250)
         // gameCount: BigInt(1),
         // gameListData: data,
       }
@@ -99,7 +100,7 @@ export function useJoinGameContract() {
     if (!gameContract) return;
     console.log("Calling contract", one);
 
-    return gameContract.getTestingMap(BigInt(1235));
+    return gameContract.getTestingMap(BigInt(9000));
   };
   const createGame = async (gameId: number) => {
     if (!gameContract) return;
